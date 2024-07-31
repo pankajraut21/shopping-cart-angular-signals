@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, effect, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
 
 import { CartService } from '../../services/cart.service';
 import { IntegerOnlyDirective } from '../../directives/integer-only.directive';
@@ -15,32 +14,29 @@ import { CartItem } from '../../../../core/models/cart-item.interface';
   imports: [CommonModule, ReactiveFormsModule, IntegerOnlyDirective]
 })
 export class CartComponent implements OnInit, OnDestroy {
-  cartItems: CartItem[] = [];
+  cartItemsSignal: WritableSignal<CartItem[]> = signal<CartItem[]>([]);
   cartForm: FormGroup;
-  totalPrice$: Observable<number> | undefined;
+  totalPriceSignal = this.cartService.totalPriceSignal;
 
-  private subscriptions: Subscription = new Subscription();
-
-  constructor(private cartService: CartService, private formBuilder: FormBuilder) {
+  constructor(public cartService: CartService, private formBuilder: FormBuilder) {
     this.cartForm = this.formBuilder.group({});
   }
 
   ngOnInit(): void {
-    this.totalPrice$ = this.cartService.totalPrice$;
-    this.loadCart();    
-    const cartCountSubscription = this.cartService.cartCount$.subscribe(() => {
+    effect(() => {
+      const items = this.cartService.cartItemsSignal();
+      this.cartItemsSignal.set(items);
       this.loadCart();
     });
-    this.subscriptions.add(cartCountSubscription);
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
   loadCart(): void {
-    this.cartItems = this.cartService.getCart();
-    this.cartItems?.forEach(item => {
+    const cartItems = this.cartItemsSignal();
+    this.cartForm = this.formBuilder.group({}); // Reset the form group
+
+    cartItems.forEach(item => {
       if (!this.cartForm.contains(item.id.toString())) {
         const control = this.formBuilder.control(item.quantity || 0);
         control.valueChanges.subscribe(() => this.updateQuantity(item));

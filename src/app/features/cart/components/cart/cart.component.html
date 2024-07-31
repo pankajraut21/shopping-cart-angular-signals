@@ -1,13 +1,13 @@
 <div class="cart-container">
   <h2 class="cart-title">Cart</h2>
 
-  <div *ngIf="cartItems.length === 0; else cartNotEmpty" class="empty-cart">
+  <div *ngIf="cartItemsSignal().length === 0; else cartNotEmpty" class="empty-cart">
     Your cart is empty.
   </div>
   
   <ng-template #cartNotEmpty>
     <div class="total-price">
-      <ng-container *ngIf="totalPrice$ | async as totalPrice; else noTotalPrice">
+      <ng-container *ngIf="totalPriceSignal() as totalPrice; else noTotalPrice">
         <h3>Total Price: {{ totalPrice | currency:'INR':'symbol':'1.2-2' }}</h3>
       </ng-container>
       <ng-template #noTotalPrice>
@@ -17,7 +17,7 @@
   </ng-template>  
 
   <form [formGroup]="cartForm" class="cart-form">
-    <div *ngFor="let item of cartItems" class="cart-item">
+    <div *ngFor="let item of cartItemsSignal()" class="cart-item">
       <img [src]="item?.thumbnail" alt="{{ item?.title }}" class="cart-image" />
 
       <div class="item-details">
