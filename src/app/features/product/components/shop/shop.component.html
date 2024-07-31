@@ -1,0 +1,25 @@
+<h2>Shop</h2>
+<div class="product-list">
+  <ng-container *ngIf="(products$ | async) as products; else loading">
+    <ng-container *ngIf="products.length === 0">
+      <p>No products available.</p>
+    </ng-container>
+    <div *ngFor="let product of products; trackBy: trackByFn" class="product-card">
+      <img
+        src="{{ product?.thumbnail }}"
+        alt="{{ product?.title }}"
+        class="product-image"
+      />
+      <h3 class="item-title">{{ product?.title }}</h3>
+      <p class="item-price">Price: {{ product?.price | currency:'INR':'symbol':'1.2-2' }}</p>
+      <span *ngIf="product.discountPercentage" class="badge">
+        Discount: {{ product?.discountPercentage }}%
+      </span>
+      <p class="rating">Rating: {{ product?.rating }}/5</p>
+      <button (click)="addToCart(product)" class="add-to-cart">Add to Cart</button>
+    </div>
+  </ng-container>
+  <ng-template #loading>
+    <p>Loading products...</p>
+  </ng-template>
+</div>

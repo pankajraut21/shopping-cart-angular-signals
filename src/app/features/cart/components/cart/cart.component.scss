@@ -1,0 +1,139 @@
+.cart-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+
+  .cart-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .empty-cart {
+    font-size: 1.2rem;
+    text-align: center;
+    color: #777;
+    margin: 0 0 10px 0;
+  }
+
+  .total-price {
+    margin: 0;
+    font-size: 1.5rem;
+    text-align: right;
+    margin-bottom: 1rem;
+    max-width: 100%; 
+    overflow: hidden;
+
+    h3 {
+      font-size: 1.5rem;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      white-space: nowrap;
+    }
+  }
+
+  .cart-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    flex: 1;
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 600px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      .cart-image {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-right: 1rem;
+      }
+
+      .item-details {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .item-title {
+          font-size: 1.2rem;
+          margin: 0;
+        }
+
+        .item-price {
+          font-size: 1rem;
+          margin: 0.5rem 0;
+        }
+
+        .badge {
+          display: inline-block;
+          padding: 4px 8px;
+          border-radius: 4px;
+          font-size: 0.9rem;
+          font-weight: bold;
+          text-transform: uppercase;
+          background-color: #6C757D;
+          color: white;
+          max-width: 26%;
+          overflow: hidden;
+          white-space: nowrap;
+          margin: 0px 0px 10px 0px;
+        }
+
+        .item-quantity {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          input.quantity-input {
+            width: 60px;
+            margin-right: 1rem;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+          }
+
+          .remove-button {
+            background-color: #1a1818;
+            color: white;
+            border: none;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+
+            &:hover {
+              background-color: #130f0f;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+ng-template {
+  h3 {
+    font-size: 1.5rem;
+    text-align: right;
+    margin-bottom: 1rem;
+  }
+}

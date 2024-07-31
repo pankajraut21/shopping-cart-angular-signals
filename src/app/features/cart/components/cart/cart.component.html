@@ -1,0 +1,49 @@
+<div class="cart-container">
+  <h2 class="cart-title">Cart</h2>
+
+  <div *ngIf="cartItems.length === 0; else cartNotEmpty" class="empty-cart">
+    Your cart is empty.
+  </div>
+  
+  <ng-template #cartNotEmpty>
+    <div class="total-price">
+      <ng-container *ngIf="totalPrice$ | async as totalPrice; else noTotalPrice">
+        <h3>Total Price: {{ totalPrice | currency:'INR':'symbol':'1.2-2' }}</h3>
+      </ng-container>
+      <ng-template #noTotalPrice>
+        <h3>Total Price: {{ '0.00' | currency:'INR' }}</h3>
+      </ng-template>
+    </div>
+  </ng-template>  
+
+  <form [formGroup]="cartForm" class="cart-form">
+    <div *ngFor="let item of cartItems" class="cart-item">
+      <img [src]="item?.thumbnail" alt="{{ item?.title }}" class="cart-image" />
+
+      <div class="item-details">
+        <h3 class="item-title">{{ item?.title }}</h3>
+        <p class="item-price">Price: {{ item?.price | currency:'INR':'symbol':'1.2-2' }}</p>
+        <span *ngIf="item?.discountPercentage" class="badge">
+          Discount: {{ item?.discountPercentage }}%
+        </span>
+        <div class="item-quantity">
+          <input 
+            [formControlName]="item.id.toString()"
+            type="number" 
+            min="1" 
+            step="1" 
+            [attr.aria-label]="'Quantity for ' + item?.title"
+            class="quantity-input"
+            integerOnly
+          />
+          <button 
+            type="button" 
+            (click)="item?.id ? removeFromCart(item.id) : null" 
+            class="remove-button">
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

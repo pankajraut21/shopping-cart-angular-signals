@@ -1,0 +1,16 @@
+<nav class="navbar">
+    <div class="nav-left">
+      <label (click)="displayShop()" id="shop-label">Shop</label>
+    </div>
+    <div class="nav-right">
+      <label (click)="displayCart()" id="cart-label">Cart ({{ cartCount$ | async }})</label>
+    </div>
+</nav>
+  
+<div class="content">
+    <app-home [view]="view">
+      <app-shop class="shop"></app-shop>
+      <app-cart class="cart"></app-cart>
+    </app-home>
+</div>
+  

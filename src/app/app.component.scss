@@ -1,0 +1,49 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #333;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    
+    .nav-left, 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      
+      label {
+        color: white;
+        text-decoration: none;
+        margin: 0 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+        
+        &:hover {
+          background-color: #555;
+        }
+      }
+    }
+  }
+  
+  .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f4f4f4;
+    min-height: calc(100vh - 56px);
+    flex-direction: column;
+    
+    app-home {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+  
